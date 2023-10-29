@@ -12,7 +12,7 @@ const courseSchema=new mongoose.Schema({
 });
 //use model to create class for schema
 const Course=mongoose.model('Course',courseSchema);
-async function createCourse(){
+/*async function createCourse(){
 //creating object for class
 const course=new Course({
   name:'javascript course',
@@ -23,4 +23,13 @@ const course=new Course({
 const result= await course.save();
 console.log(result);
 }
-createCourse();
+createCourse();*/
+// getting documents from monngo db
+async function getCourse(){
+ const courses= await Course.find({author:"jas"})
+ .limit(10)
+ .sort({name:1})
+ .select({name:1,tags:1});
+ console.log(courses);
+}
+getCourse();
