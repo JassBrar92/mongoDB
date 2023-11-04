@@ -30,6 +30,8 @@ createCourse();
 */
 // getting documents from monngo db
 async function getCourse(){
+  const pageNumber=2;
+  const pageSize=10;
  const courses= await Course
  .find({author:"jas"})
  // start with ja
@@ -44,9 +46,10 @@ async function getCourse(){
  //comparision operators
  //.find({price:{ $gte:10,$lte:20}})   //comparision operators
  //.find({price:{$in :[12,100]}})    //comparision operators
-// .limit(10)
+ //.skip((pageNumber-1)*pageSize)  //pagination
+ //.limit(pageSize)               //pagination
  //.sort({name:1})
- .count();
+ //.count();
  //.select({name:1,tags:1});
  console.log(courses);
 }
