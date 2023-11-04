@@ -32,12 +32,18 @@ createCourse();
 async function getCourse(){
  const courses= await Course
  //.find({author:"jas"})
- .find()
+ // start with ja
+ //.find({author:/^ja/})   //regular expressions case sensitive
+ // end with der
+ //.find({author:/der$/i})  //regular expressions case insenitive
+ // any where kh in string
+.find({author:/.*kh.*/})   //regular expressions case sensitive
+ //.find()
  //.or([{author:"jas"},{isPublished:true}])  //logical operator
- .and([{author:"jas"},{isPublished:true}])   // logical operator
+ //.and([{author:"jas"},{isPublished:true}])   // logical operator
  //comparision operators
  //.find({price:{ $gte:10,$lte:20}})   //comparision operators
- .find({price:{$in :[12,100]}})    //comparision operators
+ //.find({price:{$in :[12,100]}})    //comparision operators
 // .limit(10)
  //.sort({name:1})
  //.select({name:1,tags:1});
