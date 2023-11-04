@@ -31,7 +31,7 @@ createCourse();
 // getting documents from monngo db
 async function getCourse(){
  const courses= await Course
- //.find({author:"jas"})
+ .find({author:"jas"})
  // start with ja
  //.find({author:/^ja/})   //regular expressions case sensitive
  // end with der
@@ -46,6 +46,7 @@ async function getCourse(){
  //.find({price:{$in :[12,100]}})    //comparision operators
 // .limit(10)
  //.sort({name:1})
+ .count();
  //.select({name:1,tags:1});
  console.log(courses);
 }
