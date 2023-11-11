@@ -4,24 +4,37 @@ mongoose.connect('mongodb://localhost/playground')
 .catch(err=>console.error('Not connected to mongo database',err));
 // creating schema 
 const courseSchema=new mongoose.Schema({
- name:{type:String,required:true,minlength:10,maxlength:30,//match:/pattern/
+ name:{type:String,required:true,minlength:1,maxlength:30,//match:/pattern/
 },
  author:String,
- tags:[String],
+ tags:{
+  type:Array,
+  validate:{
+    validator:function(v){
+      return v && v.length>0;
+    },
+    message:"There must be one tag"
+  }
+},
  date:{ type: Date,default: Date.now},
  isPublished:Boolean,
  price :{type:Number,required:function(){
   return this.isPublished;
- },min:15,max:100}
-});
+ },min:5,max:100},
+category:{
+  type:String,
+  required:true,
+  enum:["Web","Mobile","Network"]
+}});
 //use model to create class for schema
 const Course=mongoose.model('Course',courseSchema);
 async function createCourse(){
 //creating object for class
 const course=new Course({
   name:"node js",
+  category:'Mobile',
   author:'jas',
-  tags:['jquery','DB'],
+ tags:["Backend"],
   isPublished:true,
   price:12
 });
