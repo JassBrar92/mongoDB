@@ -37,7 +37,7 @@ async function createCourse(){
 //creating object for class
 const course=new Course({
   name:"node js",
-  category:'Mobile',
+  category:'-',
   author:'jas',
  tags:[],
   isPublished:true,
@@ -49,7 +49,10 @@ try{
   console.log(result);
 }
 catch(ex){
-  console.log(ex.message);
+  for(field in ex.errors){
+    console.log(ex.errors[field].message);
+  }
+ // console.log(ex.message);
 }
 }
 createCourse();
