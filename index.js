@@ -10,9 +10,14 @@ const courseSchema=new mongoose.Schema({
  tags:{
   type:Array,
   validate:{
-    validator:function(v){
-      return v && v.length>0;
-    },
+    isAsync:true,
+    validator:function(v,callback){
+      setTimeout(()=>{
+        // do some async work here
+        const result=v && v.length>0;
+        callback(result);
+      },4000);
+   },
     message:"There must be one tag"
   }
 },
@@ -34,7 +39,7 @@ const course=new Course({
   name:"node js",
   category:'Mobile',
   author:'jas',
- tags:["Backend"],
+ tags:[],
   isPublished:true,
   price:12
 });
