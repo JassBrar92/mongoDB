@@ -4,30 +4,37 @@ mongoose.connect('mongodb://localhost/playground')
 .catch(err=>console.error('Not connected to mongo database',err));
 // creating schema 
 const courseSchema=new mongoose.Schema({
- name:String,
+ name:{type:String,required:true,minlength:10,maxlength:30,//match:/pattern/
+},
  author:String,
  tags:[String],
  date:{ type: Date,default: Date.now},
  isPublished:Boolean,
- price : Number
+ price :{type:Number,required:function(){
+  return this.isPublished;
+ },min:15,max:100}
 });
 //use model to create class for schema
 const Course=mongoose.model('Course',courseSchema);
-/*async function createCourse(){
+async function createCourse(){
 //creating object for class
 const course=new Course({
-  name:'jquery course',
-  author:'jaswinder',
-  tags:['jquery','database'],
+  name:"node js",
+  author:'jas',
+  tags:['jquery','DB'],
   isPublished:true,
   price:12
 });
 // save to database
-const result= await course.save();
-console.log(result);
+try{
+  const result= await course.save();
+  console.log(result);
+}
+catch(ex){
+  console.log(ex.message);
+}
 }
 createCourse();
-*/
 // getting documents from monngo db
 async function getCourse(){
   const pageNumber=2;
@@ -39,7 +46,7 @@ async function getCourse(){
  // end with der
  //.find({author:/der$/i})  //regular expressions case insenitive
  // any where kh in string
-.find({author:/.*kh.*/})   //regular expressions case sensitive
+//.find({author:/.*kh.*/})   //regular expressions case sensitive
  //.find()
  //.or([{author:"jas"},{isPublished:true}])  //logical operator
  //.and([{author:"jas"},{isPublished:true}])   // logical operator
@@ -53,4 +60,4 @@ async function getCourse(){
  //.select({name:1,tags:1});
  console.log(courses);
 }
-getCourse();
+//getCourse();
