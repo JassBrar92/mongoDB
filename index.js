@@ -23,13 +23,23 @@ const courseSchema=new mongoose.Schema({
 },
  date:{ type: Date,default: Date.now},
  isPublished:Boolean,
- price :{type:Number,required:function(){
+ price :{
+  type:Number,
+  required:function(){
   return this.isPublished;
- },min:5,max:100},
+ },
+ min:5,
+ max:100,
+ get:v=>Math.round(v),
+ set:v=>Math.round(v) 
+},
 category:{
   type:String,
-  required:true,
-  enum:["Web","Mobile","Network"]
+  required: true,
+  enum:["Web","Mobile","Network"],
+ // lowercase: true,
+  //uppercase: true,
+  trim: true
 }});
 //use model to create class for schema
 const Course=mongoose.model('Course',courseSchema);
@@ -37,11 +47,11 @@ async function createCourse(){
 //creating object for class
 const course=new Course({
   name:"node js",
-  category:'-',
+  category:'Web',
   author:'jas',
- tags:[],
+ tags:['frontend'],
   isPublished:true,
-  price:12
+  price:12.9
 });
 // save to database
 try{
@@ -55,19 +65,20 @@ catch(ex){
  // console.log(ex.message);
 }
 }
-createCourse();
+//createCourse();
 // getting documents from monngo db
 async function getCourse(){
   const pageNumber=2;
   const pageSize=10;
- const courses= await Course
- .find({author:"jas"})
+  const courses= await Course
+ .find({_id:'6551384d0497302898012924'})
+ //.find({author:"jas"})
  // start with ja
  //.find({author:/^ja/})   //regular expressions case sensitive
  // end with der
  //.find({author:/der$/i})  //regular expressions case insenitive
  // any where kh in string
-//.find({author:/.*kh.*/})   //regular expressions case sensitive
+ //.find({author:/.*kh.*/})   //regular expressions case sensitive
  //.find()
  //.or([{author:"jas"},{isPublished:true}])  //logical operator
  //.and([{author:"jas"},{isPublished:true}])   // logical operator
@@ -79,6 +90,6 @@ async function getCourse(){
  //.sort({name:1})
  //.count();
  //.select({name:1,tags:1});
- console.log(courses);
+ console.log(courses[0].price);
 }
-//getCourse();
+getCourse();
