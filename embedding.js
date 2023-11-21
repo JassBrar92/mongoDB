@@ -11,9 +11,10 @@ mongoose.connect('mongodb://localhost/playground')
   const Author = mongoose.model('Author',autherSchema);
   const Course = mongoose.model('Course', new mongoose.Schema({ 
     name: String,
+    //author:autherSchema
     author:{
-      type: mongoose.Schema.Types.ObjectId,
-      ref: autherSchema
+      type:autherSchema,
+      required:true
     }
    }));
    async function createCourse(name, author)
@@ -21,15 +22,30 @@ mongoose.connect('mongodb://localhost/playground')
     const course = new Course({ 
       name,
       author
-   }); 
+   });
+    
     const result = await course.save(); 
     console.log(result);
    } 
+  /* async function updateCourse(courseId){
+    const course=  await Course.findById(courseId);
+     course.author.name= "john smith";
+     course.save();
+   }*/
+   async function updateCourseDirectly(courseId){
+    const course =await Course.update({_id: courseId }, {
+      $set: {
+        'author.name':'john Cina'
+      }
+    });
+   }
    async function listCourses() 
    { 
     const courses = await Course 
     .find();
      console.log(courses); 
    } 
-    createCourse('Node Course',new Author({name:'Mosh'}));
+    //createCourse('Node Course',new Author({name:'john'}));
+    //updateCourse("655c376af19a053438144845");
+    updateCourseDirectly("655c36d9a146492864c363f5");
     //listCourses();

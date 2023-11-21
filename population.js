@@ -23,7 +23,10 @@ mongoose.connect('mongodb://localhost/playground')
    }
    async function createCourse(name, author)
    { 
-    const course = new Course({ name, author }); 
+    const course = new Course({ 
+      name, 
+      author
+     }); 
     const result = await course.save(); 
     console.log(result);
    } 
@@ -36,5 +39,5 @@ mongoose.connect('mongodb://localhost/playground')
      console.log(courses); 
    } 
    //createAuthor('Mosh', 'My bio', 'My Website');
-   // createCourse('Node Course', '655a9b3219527c383cae6def');
-    // listCourses();
+   //createCourse('Node Course', '655c322b7e73c83050d1b087');
+     listCourses();
