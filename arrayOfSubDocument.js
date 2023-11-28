@@ -34,10 +34,11 @@ mongoose.connect('mongodb://localhost/playground')
     author.remove();
     course.save();
    }
-   removeAuthor('655d7c57dd6cb14dec84e5e6','655d7d925dff4c2680a31ca5');
+   //removeAuthor('655d7c57dd6cb14dec84e5e6','655d7d925dff4c2680a31ca5');
    //addAuthor('655d7c57dd6cb14dec84e5e6',new Author({name:"benny"}));
      
-   /* createCourse('Node Course',[
+    createCourse('Node Course',[
       new Author({name:'john'}),
-      new Author({name:'Avi'})
-    ]);*/
+      new Author({name:'Avi'}),
+      new Author({name:'Gurjit'})
+    ]);
